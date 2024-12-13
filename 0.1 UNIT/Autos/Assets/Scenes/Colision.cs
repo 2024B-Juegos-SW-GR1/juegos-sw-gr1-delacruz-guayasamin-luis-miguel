@@ -1,0 +1,32 @@
+using System;
+using UnityEngine;
+
+public class Colision : MonoBehaviour
+{
+    private bool hasPackage;
+    [SerializeField] private float destroyDelay = 0.5f;
+    private SpriteRenderer _spriteRenderer;
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        Debug.Log("Golpe");
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Entrando a trigger");
+        if (other.tag == "Paquete" && hasPackage != true)
+        {
+            Debug.Log("Paquete recogido");
+            hasPackage = true;
+            Destroy(other.gameObject, destroyDelay);
+        }
+
+        if (other.tag == "Cliente" && hasPackage == true)
+        {
+
+            Debug.Log("Paquete entregado");
+            hasPackage = false;
+            _spriteRenderer.color = Color.green;
+        }
+    }
+}
